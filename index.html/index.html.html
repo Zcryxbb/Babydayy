@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>For You 💖</title>
+
+<style>
+    .hearts-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hearts-bg span {
+    position: absolute;
+    bottom: -20px;
+    font-size: 18px;
+    opacity: 0.8;
+    animation: floatHeart linear forwards;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+    }
+}
+.input {
+    width: 80%;
+    padding: 12px;
+    border-radius: 20px;
+    border: 2px solid #ffd1dc;
+    text-align: center;
+    font-size: 16px;
+    outline: none;
+    margin: 15px 0;
+}
+/* ให้เนื้อหาอยู่เหนือหัวใจ */
+.page > * {
+    position: relative;
+    z-index: 1;
+}
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg,#ffd1dc,#ffe6f0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.page {
+    display: none;
+    background: white;
+    width: 420px;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.page.active {
+    display: block;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    background: #ff5c8a;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.small-btn {
+    padding: 10px 18px;
+    font-size: 14px;
+}
+
+.gift {
+    font-size: 100px;
+}
+
+.cake {
+    font-size: 100px;
+}
+
+.back {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.menu button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* แผ่นเสียง */
+.record {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-size: cover;
+    animation: spin 10s linear infinite;
+    margin: auto;
+}
+.menu {
+    margin-top: 25px;
+}
+
+/* กล่องปุ่มหลัก */
+.menu-box {
+    margin: 14px 0;
+    padding: 18px;
+    border-radius: 18px;
+    background: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+
+    border: 2px solid transparent;
+    animation: glow 3s ease-in-out infinite;
+    transition: transform 0.25s ease;
+}
+
+/* hover */
+.menu-box:hover {
+    transform: scale(1.05);
+}
+/* ---------- letter ---------- */
+.polaroid {
+    background:white;
+    padding:10px 10px 20px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    width:180px;
+    margin:15px auto;
+}
+.polaroid img {
+    width:100%;
+    border-radius:0px;
+}
+/* สีแต่ละปุ่ม */
+.menu-box.letter {
+    color: #ff4d88;
+    border-color: #ff4d88;
+    box-shadow: 0 0 10px rgba(255,77,136,0.4);
+}
+
+.menu-box.music {
+    color: #6a5cff;
+    border-color: #6a5cff;
+    box-shadow: 0 0 10px rgba(106,92,255,0.4);
+}
+
+.menu-box.close {
+    color: #999;
+    border-color: #ccc;
+    box-shadow: 0 0 8px rgba(180,180,180,0.4);
+}
+.menu-box {
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(90deg, #ff4d88, #ff9fc4) border-box;
+    border: 2px solid transparent;
+}
+
+/* เรืองแสงกระพริบเบา ๆ */
+@keyframes glow {
+    10%   { box-shadow: 0 0 8px rgba(255,255,255,0.3); }
+    50%  { box-shadow: 0 0 18px rgba(255,92,138,0.6); }
+    100% { box-shadow: 0 0 8px rgba(255,255,255,0.3); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.player-card {
+    background: #fff;
+    border-radius: 25px;
+    padding: 25px;
+    width: 280px;
+    margin: auto;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.cover {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 15px auto;
+    display: block;
+}
+
+.player-card {
+    background: #fff;
+    border-radius: 25px;
+    padding: 25px;
+    width: 280px;
+    margin: auto;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.cover {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 15px auto;
+    display: block;
+}
+
+.cover.playing {
+    animation: spin 5s linear infinite;
+}
+
+.song-title {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.artist {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.record {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-size: cover;
+    animation: spin 10s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.love-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 15px 40px rgba(255,105,180,0.25);
+}
+
+.love-photo {
+    width: 200px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+}
+
+.love-text {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.counter {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    font-weight: bold;
+}
+
+.counter div {
+    background: #ffe6f0;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.counter span {
+    font-size: 22px;
+    color: #ff4d88;
+}
+
+</style>
+<script>
+
+    
+function stopMusicAndGo(page) {
+    const audio = document.getElementById("audio");
+    if (audio) {
+        audio.pause();        // หยุดเพลง
+        audio.currentTime = 0; // รีเซ็ตกลับต้นเพลง
+    }
+    go(page); // ไปหน้าที่ต้องการ
+}
+</script>
+<script>
+function createHeart(pageId) {
+    const container = document.querySelector(`#${pageId} .hearts-bg`);
+    if (!container) return;
+
+    const heart = document.createElement("span");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+    container.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 8000);
+}
+
+setInterval(() => {
+    if (document.getElementById("page4").classList.contains("active")) {
+        createHeart("page4");
+    }
+}, 600);
+</script>
+<script>
+const startDate = new Date("2025-12-13T03:00:00"); // วันเริ่มคบ ❤️
+
+function updateLoveTime() {
+    const now = new Date();
+    let diff = now - startDate;
+
+    const s = Math.floor(diff / 1000);
+    const m = Math.floor(s / 60);
+    const h = Math.floor(m / 60);
+    const d = Math.floor(h / 24);
+
+    const years = Math.floor(d / 365);
+    const months = Math.floor((d % 365) / 30);
+    const days = (d % 365) % 30;
+
+    document.getElementById("y").textContent = years;
+    document.getElementById("mo").textContent = months;
+    document.getElementById("d").textContent = days;
+    document.getElementById("h").textContent = h % 24;
+    document.getElementById("m").textContent = m % 60;
+    document.getElementById("s").textContent = s % 60;
+}
+
+setInterval(updateLoveTime, 1000);
+updateLoveTime();
+</script>
+<script>
+function go(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + page).classList.add('active');
+}
+
+function enter() {
+    const name = document.getElementById("username").value.trim();
+
+    if (name === "") {
+        alert("ใส่ชื่อก่อนน้า 💕");
+        return;
+    }
+
+    // เก็บชื่อไว้ใช้ต่อ
+    localStorage.setItem("loverName", name);
+
+    // ไปหน้าแรกจริง (page1)
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById("page1").classList.add('active');
+}
+</script>
+</head>
+
+<body>
+
+<!-- หน้า Register -->
+<div class="page active" id="register">
+    <h2>Welcome 💕</h2>
+    <p>กรุณาใส่ชื่อของคุณ</p>
+
+    <input
+        type="text"
+        id="username"
+        placeholder="ชื่อของคุณ"
+        class="input"
+    >
+
+    <button onclick="enter()">เข้าสู่ความพิเศษ ✨</button>
+</div>
+    <!-- หน้า 1 -->
+<div class="page" id="page1">
+    <h2>Happy Birthday 💕</h2>
+    <div class="gift">🎁</div>
+    <p>คลิกเพื่อเปิดของขวัญ</p>
+    <button onclick="go(2)">เปิดของขวัญ</button>
+</div>
+
+<!-- หน้า 2 -->
+<div class="page" id="page2">
+    <h2>Make a wish </h2>
+    <div class="cake">🎂</div>
+    <p>ขอให้ทุกคำอธิษฐานของเธอเป็นจริงนะ ✨</p>
+    <button onclick="go(3)">เป่าเทียน 🕯️</button>
+    <div class="hearts"></div>
+</div>
+
+<!-- หน้า 3 -->
+<div class="page" id="page3">
+    <h2>Select Button 💖</h2>
+
+    <div class="menu">
+        <div class="menu-box" onclick="go(4)">📜 อ่านจดหมายอวยพร</div>
+        <div class="menu-box" onclick="go(5)">🎵 เพลง</div>
+        <div class="menu-box" onclick="go(7)">🗓️ love calendar</div>
+        <div class="menu-box close" onclick="go(1)">❌ ปิด</div>
+    
+    </div>
+</div>
+
+
+<!-- หน้า 4 -->
+<div class="page" id="page4">
+    <h2>Dear My Love</h2>
+     <div class="polaroid">
+        <img src="Rak2.png">
+    </div>
+    <p>
+        <h2>Happy Birthday </h2><br>
+        ขอให้เธอมีความสุขมากๆได้เจอแต่คนใจดีเป็นที่รักของทุกคนได้กินของอร่อยๆทุกวัน<br>
+        ยิ้มเยอะๆยิ้มทุกวันขอให้เธอโตมาเป็นภูมิที่มีคุณภาพ<br>
+        ขอให้เราสองคนอยู่ด้วยกันไปนานให้เบบี๋อยู่เป็นความสุขให้เค้าไปนานๆเลย 💕
+    </p>
+    <button class="back small-btn" onclick="go(3)">ย้อนกลับ</button>
+</div>
+
+<div class="page" id="page5">
+    <h3>เพลงสำหรับเธอ 💕</h3>
+
+    <div class="player-card">
+        <img
+          src="Rak5.png"
+          class="cover"
+          id="cover"
+        >
+
+        <div class="song-title">Wish</div>
+        <div class="artist">Blackbeans</div>
+
+        <audio id="audio" controls loop>
+            <source src="wish.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <button class="back small-btn" onclick="stopMusicAndGo(3)">ย้อนกลับ</button>
+</div>
+
+<div class="page" id="page7">
+    <h2>Our Love Journey 💕</h2>
+
+    <div class="love-card">
+        <img src="Rak1.png" class="love-photo">
+        <p class="love-text">เราอยู่ด้วยกันมา</p>
+
+        <div class="counter">
+            <div><span id="y">0</span> ปี</div>
+            <div><span id="mo">0</span> เดือน</div>
+            <div><span id="d">0</span> วัน</div>
+            <div><span id="h">0</span> ชั่วโมง</div>
+            <div><span id="m">0</span> นาที</div>
+            <div><span id="s">0</span> วินาที</div>
+        </div>
+    </div>
+
+    <button class="back small-btn" onclick="go(3)">ย้อนกลับ</button>
+</div>
+
+
+<script>
+function go(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + page).classList.add('active');
+}
+
+function stopSong() {
+    document.getElementById("song").pause();
+    go(3);
+}
+</script>
+
+
+</body>
+</html>
